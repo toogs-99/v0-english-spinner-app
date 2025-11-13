@@ -2,14 +2,14 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { RotateCcw, BookOpen } from "lucide-react"
+import { RotateCcw, BookOpen } from 'lucide-react'
 import Image from "next/image"
 
 export default function HomePage() {
   return (
     <main className="relative min-h-screen bg-[#f8fafc] dark:bg-[#0f172a] flex flex-col overflow-hidden">
       {/* Content Container */}
-      <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-5 sm:px-10 md:px-20 py-16 md:py-24">
+      <div className="relative z-20 flex-1 flex flex-col items-center justify-center px-5 sm:px-10 md:px-20 py-16 md:py-24">
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -65,7 +65,7 @@ export default function HomePage() {
 
           {/* CTA BUTTONS */}
           <motion.div
-            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center relative z-30"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.5 }}
@@ -109,48 +109,35 @@ export default function HomePage() {
         </motion.div>
       </div>
 
-      {/* LONDON SKYLINE CAROUSEL FOOTER */}
-      <motion.div
-        className="relative w-full flex-shrink-0 overflow-hidden z-0"
-        style={{ height: "clamp(120px, 20vh, 400px)" }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8, duration: 1 }}
-      >
-        <div className="absolute inset-0 top-0 h-24 bg-gradient-to-b from-[#f8fafc] dark:from-[#0f172a] to-transparent pointer-events-none z-10" />
-
+      <div className="absolute bottom-0 left-0 right-0 h-40 md:h-64 lg:h-80 overflow-hidden z-10">
         <motion.div
-          className="absolute inset-0 flex items-end justify-start"
-          animate={{ x: [0, -50 + "%"] }}
+          className="flex h-full w-full"
+          animate={{ x: ["0%", "-100%"] }}
           transition={{
-            duration: 40,
-            repeat: Number.POSITIVE_INFINITY,
+            duration: 25,
+            repeat: Infinity,
             ease: "linear",
-            repeatType: "loop",
           }}
         >
-          {[0, 1].map((index) => (
-            <div key={index} className="flex-shrink-0 w-full h-full flex items-end justify-start relative">
+          {[0, 1, 2].map((index) => (
+            <div
+              key={index}
+              className="flex-shrink-0 h-full relative"
+              style={{ minWidth: "100%" }}
+            >
               <Image
                 src="/london-skyline.png"
-                alt={
-                  index === 0
-                    ? "London skyline silhouette with iconic landmarks including Big Ben, Tower Bridge, and London Eye"
-                    : ""
-                }
-                width={4800}
-                height={1200}
-                className="h-full w-full object-cover object-bottom opacity-85 dark:opacity-70 filter grayscale-20"
+                alt={index === 0 ? "London skyline silhouette carousel" : ""}
+                fill
+                className="object-cover object-center opacity-100"
                 priority={index === 0}
-                loading={index === 0 ? "eager" : "lazy"}
+                sizes="100vw"
+                draggable={false}
               />
             </div>
           ))}
         </motion.div>
-      </motion.div>
-
-      {/* Gradient Overlay at the bottom for visual depth */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#f8fafc] dark:from-[#0f172a] to-transparent pointer-events-none z-5" />
+      </div>
     </main>
   )
 }
